@@ -1054,9 +1054,11 @@
                 LED 5개를 일렬로 꽂아보자. 긴 다리(+)는 마이크로비트의 <strong>P1, P2, P8, P12, P16</strong> 같은 디지털 핀에 각각 연결해. 짧은 다리(-)는
                 220Ω 저항을 하나씩 달아서 모두 <strong>GND</strong> 라인으로 모아주는 거야. GND는 모두가 함께 쓰는 공용 출구 같은 곳이지!</p>
 
-            <div class="visual-placeholder">
-                <i class="fas fa-project-diagram"></i>
-                <span>[시각 자료] 마이크로비트-브레드보드 배선 회로도(예정)</span>
+            <div style="text-align: center; margin: 30px 0;">
+                <img src="CdS 2D.png" alt="마이크로비트-브레드보드 배선 회로도"
+                    style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
+                <p style="text-align: center; margin-top: 15px; font-size: 0.9em; color: var(--text-sub);">마이크로비트-브레드보드
+                    배선 회로도</p>
             </div>
         </section>
 
@@ -1071,17 +1073,20 @@
             <p>MakeCode에 있는 <strong>값 변환</strong> 블록을 쓰면 돼. "0부터 1023까지의 값을 0부터 5까지의 범위로 바꿔줘!"라고 명령하는 거지. 수학적으로는 비례식을
                 쓰는 건데, 코딩으로는 블록 하나면 끝이야. 이렇게 변환된 값을 변수에 저장해두고, 그 변수를 조건으로 LED를 켜주면 돼. 스마트 하지? 😎</p>
 
-            <h3>직접 로직을 짜고 싶으면? 조건문(if)의 마법</h3>
-            <p>블록 말고 직접 로직을 짜고 싶다면 간단한 <strong>조건문</strong>이면 충분해. "만약(If) 센서 값이 200보다 크면 첫 번째 LED 켜기, 아니면 끄기." 이걸 5번
-                반복하는 거지. 조금 노가다(?) 같지만, 조건문의 원리를 이해하는 데는 이보다 좋은 방법이 없어. 두 가지 방법 중 하나를 선택해 보자.</p>
+            <h3>LED를 켜는 조건은 어떻게 정하나요? 조건문(if)의 마법</h3>
+            <p>센서가 보낸 값에 따라 LED를 켜는 로직을 짜기 위해선 간단한 <strong>조건문</strong>이면 충분해. "만약(If) 센서 값이 1보다 크면 첫 번째 LED 켜기, 아니면 끄기.
+                2보다 크면 두 번째 LED 켜기, 아니면 끄기." 이걸 5번 반복하는 거지. 조금 노가다(?) 같지만, 조건문의 원리를 이해하는 데는 아주 좋은 방법이지. 프로그래밍을 더 공부하면
+                더 세련된 조건문을 작성할 수도 있겠지?</p>
 
             <h3>LED를 어떻게 켜나요?</h3>
-            <p>LED를 켜려면 "핀" 메뉴로 들어가서 <strong>디지털 값 쓰기</strong> 블록을 찾아야 해. 이 블록으로 각 LED가 연결된 핀(P1, P2, P8, P12,
-                P16)에 1(켜기) 또는 0(끄기)을 써주는 거지. 핀에 1을 출력한다는 것은 3.3V의 전압을 걸어준다는 의미야. 그러면 LED가 켜지겠지? 💡</p>
+            <p>LED를 켜려면 "핀" 메뉴로 들어가서 <strong>디지털 값 출력</strong> 블록을 찾아야 해. 이 블록으로 각 LED가 연결된 핀(P1, P2, P8, P12,
+                P16)에 1(켜기) 또는 0(끄기)을 출력하는 거지. 핀에 1을 출력한다는 것은 3.3V의 전압을 걸어준다는 의미야. 그러면 LED가 켜지겠지? 💡</p>
 
-            <div class="visual-placeholder">
-                <i class="fas fa-project-diagram"></i>
-                <span>[시각 자료] MakeCode 코딩 블록 구조(예정)</span>
+            <div style="text-align: center; margin: 30px 0;">
+                <img src="block.png" alt="MakeCode 코딩 블록 구조"
+                    style="max-width: 90%; height: auto; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
+                <p style="text-align: center; margin-top: 15px; font-size: 0.9em; color: var(--text-sub);">MakeCode 코딩
+                    블록 구조</p>
             </div>
         </section>
 
@@ -1116,4 +1121,3 @@
 </body>
 
 </html>
-
