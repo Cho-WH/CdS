@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="KR">
+<html lang="ko">
 
 <head>
     <meta charset="UTF-8">
@@ -7,9 +7,8 @@
     <title>마이크로비트 5단 광량계 만들기 학습 페이지</title>
     <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
     <link
-        href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;600&family=Noto+Serif+KR:wght@400;600&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
         :root {
@@ -357,6 +356,7 @@
             color: #FFD700;
             font-weight: bold;
             font-family: 'Courier New', monospace;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
         }
 
         .fixed-component {
@@ -860,7 +860,7 @@
                 <div class="control-panel">
                     <div class="slider-container">
                         <span>🌑 어둠</span>
-                        <input type="range" id="lightSlider" min="0" max="100" value="50">
+                        <input type="range" id="lightSlider" min="0" max="100" value="50" aria-label="빛의 세기 조절">
                         <span>빛 ☀️</span>
                     </div>
                     <div class="readout-row">
@@ -1046,7 +1046,7 @@
 
             <h3>단계별 조립 가이드</h3>
             <p><strong>Step 1: 입력부 (센서) 연결</strong><br>
-                CdS의 한쪽 다리는 3V 라인에, 다른 쪽 다리는 10kΩ 저항과 만나게 꽂아줘. 이 만나는 지점이 가장 중요해! 여기서 점퍼선을 뽑아서 마이크로비트의
+                CdS의 한쪽 다리는 3V 라인(3.3V 입력)에, 다른 쪽 다리는 10kΩ 저항과 만나게 꽂아줘. 이 만나는 지점이 가장 중요해! 여기서 점퍼선을 뽑아서 마이크로비트의
                 <strong>P0</strong> 핀으로 보내는 거야. 그리고 10kΩ 저항의 반대쪽 다리는 꼭 <strong>GND</strong>로 보내줘. (3V - CdS - P0분기점 -
                 10kΩ - GND 순서)
             </p>
@@ -1068,7 +1068,7 @@
             <h2>4. 소프트웨어 로직: 마이크로비트 안에 구현되는 정신</h2>
 
             <h3>맵핑(Mapping): 수학을 코딩으로</h3>
-            <p>센서 값은 0에서 1023까지 변하는데, 우리가 가진 LED는 고작 5개뿐이야. 이 거대한 숫자를 5단계로 어떻게 줄일 수 있을까? 여기서
+            <p>센서 값은 0에서 1023까지 변하는데, 우리가 가진 LED는 고작 5개뿐이야. 이 거대한 숫자를 6단계(0~5)로 어떻게 줄일 수 있을까? 여기서
                 <strong>'맵핑(Mapping)'</strong>이라는 멋진 스킬이 등장해.
             </p>
             <p>MakeCode에 있는 <strong>값 변환</strong> 블록을 쓰면 돼. "0부터 1023까지의 값을 0부터 5까지의 범위로 바꿔줘!"라고 명령하는 거지. 수학적으로는 비례식을
