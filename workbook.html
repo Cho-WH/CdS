@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이크로비트 5단 광량계 만들기 워크북 (인쇄용)</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;600&family=Noto+Serif+KR:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ===== 인쇄용 색상 변수 (Light Theme) ===== */
+        :root {
+            --bg-color: #ffffff;
+            --card-bg: #f9f9f9;
+            --text-main: #000000;
+            --text-sub: #333333;
+            --border-color: #cccccc;
+            --accent-primary: #6B46C1;
+            --accent-secondary: #047857;
+            --accent-warn: #B91C1C;
+            --gradient-title: linear-gradient(135deg, #6B46C1 0%, #4C1D95 100%);
+        }
+
+        /* ===== 페이지 설정 (A4) ===== */
+        @page {
+            size: A4;
+            margin: 18mm 15mm 20mm 15mm;
+        }
+
+        @page: first {
+            margin-top: 10mm;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Serif KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            font-size: 11pt;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 10px 0;
+        }
+
+        /* ===== 인쇄 안내 (화면에서만 표시) ===== */
+        .print-guide {
+            background: #FEF3C7;
+            border: 2px solid #F59E0B;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            color: #92400E;
+        }
+
+        @media print {
+            .print-guide {
+                display: none;
+            }
+        }
+
+        /* ===== 헤더 ===== */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        .main-title {
+            font-size: 2.2rem;
+            margin: 0 0 10px 0;
+            color: var(--accent-primary);
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-family: 'Gowun Batang', serif;
+            font-size: 1.1rem;
+            color: var(--text-sub);
+            margin: 0;
+        }
+
+        /* ===== 목차 ===== */
+        .toc {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 5px 30px;
+            margin-bottom: 30px;
+        }
+
+        .toc h2 {
+            color: var(--accent-primary);
+            font-size: 1.4rem;
+            margin: 0 0 10px 0;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--accent-secondary);
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc-list li {
+            display: flex;
+            justify-content: flex-start;
+            align-items: baseline;
+            padding: 4px 0;
+            margin-bottom: 0;
+            border-bottom: 1px dotted var(--border-color);
+            font-size: 1rem;
+        }
+
+        .toc-list li:last-child {
+            border-bottom: none;
+        }
+
+        .toc-list .toc-title {
+            font-weight: 600;
+        }
+
+        .toc-list .toc-page {
+            color: var(--text-sub);
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ===== 섹션 ===== */
+        section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            break-inside: avoid;
+        }
+
+        h2 {
+            color: var(--accent-primary);
+            font-size: 1.5rem;
+            border-left: 4px solid var(--accent-secondary);
+            padding-left: 15px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            break-after: avoid;
+        }
+
+        h3 {
+            color: var(--accent-secondary);
+            font-size: 1.15rem;
+            margin-top: 30px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            word-break: keep-all;
+            text-align: justify;
+        }
+
+        strong {
+            color: var(--accent-primary);
+            background: rgba(107, 70, 193, 0.1);
+            padding: 1px 5px;
+            border-radius: 3px;
+        }
+
+        code {
+            background: rgba(4, 120, 87, 0.1);
+            color: var(--accent-secondary);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        /* ===== 키워드 섹션 ===== */
+        .type-key-terms {
+            background: linear-gradient(135deg, rgba(4, 120, 87, 0.08) 0%, rgba(107, 70, 193, 0.08) 100%);
+            border: 2px solid var(--accent-secondary);
+            text-align: center;
+            padding: 20px 30px;
+        }
+
+        .type-key-terms h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--accent-primary);
+        }
+
+        .keyword-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .keyword-chip {
+            background: #E0E7FF;
+            border: 2px solid var(--accent-primary);
+            color: var(--accent-primary);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* ===== 리스트 ===== */
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            position: relative;
+            list-style: none;
+        }
+
+        li::before {
+            content: "▪";
+            color: var(--accent-secondary);
+            font-weight: bold;
+            display: inline-block;
+            width: 1.5em;
+            margin-left: -1.5em;
+        }
+
+        /* ===== 체크리스트 ===== */
+        .checklist {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0px 25px;
+            margin: 5px 0;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 5px;
+            padding: 2px 0;
+            margin-bottom: 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checklist li::before {
+            content: "☐";
+            font-size: 1.2rem;
+            margin-left: 0;
+            width: auto;
+            color: var(--text-main);
+        }
+
+        /* ===== 이미지 ===== */
+        .image-container {
+            text-align: center;
+            margin: 25px 0;
+            break-inside: avoid;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .image-caption {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: var(--text-sub);
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* ===== 공식 박스 ===== */
+        .formula-box {
+            background: #FEF3C7;
+            border: 2px solid #F59E0B;
+            border-radius: 10px;
+            padding: 20px 25px;
+            margin: 25px 0;
+            break-inside: avoid;
+        }
+
+        .formula-box h4 {
+            color: #92400E;
+            margin: 0 0 15px 0;
+            font-size: 1.1rem;
+        }
+
+        .formula-box .formula {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            background: #fff;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            text-align: center;
+            border: 1px solid #FCD34D;
+        }
+
+        .formula-box ul {
+            margin: 15px 0 0 0;
+            padding-left: 25px;
+        }
+
+        .formula-box li::before {
+            content: "•";
+            color: #92400E;
+        }
+
+        /* ===== 실습 활동 ===== */
+        .activity-box {
+            background: #ECFDF5;
+            border: 2px solid var(--accent-secondary);
+            border-radius: 10px;
+            padding: 20px 25px;
+            margin: 25px 0;
+            break-inside: avoid;
+        }
+
+        .activity-box h4 {
+            color: var(--accent-secondary);
+            margin: 0 0 15px 0;
+            font-size: 1.1rem;
+        }
+
+        .activity-box .input-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .activity-box .blank {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 2px solid var(--accent-secondary);
+            margin: 0 5px;
+            text-align: center;
+        }
+
+        /* ===== 하이라이트 박스 ===== */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(107, 70, 193, 0.1) 0%, rgba(107, 70, 193, 0.05) 100%);
+            border-left: 4px solid var(--accent-primary);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box strong {
+            background: none;
+            padding: 0;
+        }
+
+        `r`n
+
+        /* ===== QR 코드 영역 ===== */
+        .qr-section {
+            text-align: center;
+            background: #fff;
+            border: 2px solid var(--accent-primary);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px auto;
+            max-width: 400px;
+        }
+
+        .qr-section h4 {
+            color: var(--accent-primary);
+            margin: 0 0 15px 0;
+        }
+
+        .qr-section img {
+            width: 150px;
+            height: 150px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        /* ===== 요약 섹션 ===== */
+        .type-summary {
+            background: linear-gradient(135deg, rgba(185, 28, 28, 0.1) 0%, rgba(107, 70, 193, 0.1) 100%);
+            border: 2px solid var(--accent-warn);
+        }
+
+        .type-summary h3 {
+            color: var(--accent-warn);
+            margin-top: 0;
+        }
+
+        /* ===== 푸터 ===== */
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            border-top: 2px solid var(--border-color);
+            margin-top: 40px;
+        }
+
+        /* ===== 페이지 나누기 ===== */
+        .page-break {
+            page-break-before: always;
+            break-before: page;
+        }
+
+        section.page-break-after {
+            page-break-after: always;
+            break-after: page;
+        }
+
+
+
+        /* ===== 인쇄 최적화 ===== */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .container {
+                padding: 0;
+            }
+
+            section {
+                box-shadow: none;
+                break-inside: auto;
+                page-break-inside: auto;
+                -webkit-box-decoration-break: clone;
+                box-decoration-break: clone;
+            }
+
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- 인쇄 안내 (화면에서만 표시) -->
+        <div class="print-guide">
+            📄 이 워크북은 A4 용지에 양면 인쇄(컬러 권장)하여 사용하시면 됩니다. 브라우저에서 Ctrl+P를 눌러 인쇄하세요.
+        </div>
+
+        <header>
+            <h1 class="main-title">💡 빛을 숫자로 바꾸는 마법</h1>
+            <p class="subtitle">마이크로비트와 CdS 센서를 활용한 '5단 광량계' 만들기 탐구 활동</p>
+        </header>
+
+        <!-- 목차 -->
+        <nav class="toc">
+            <h2>📑 목차</h2>
+            <ul class="toc-list">
+                <li>
+                    <span class="toc-title">1. 아날로그 신호의 이해: 0과 1 사이의 무한한 세계</span>
+                </li>
+                <li>
+                    <span class="toc-title">2. 전압 분배 법칙: 보이지 않는 저항을 낚아채는 기술</span>
+                </li>
+                <li>
+                    <span class="toc-title">3. 실전 회로 구성: 브레드보드 위에 구현되는 몸체</span>
+                </li>
+                <li>
+                    <span class="toc-title">4. 소프트웨어 로직: 마이크로비트 안에 구현되는 정신</span>
+                </li>
+                <li>
+                    <span class="toc-title">5. 선생님, 이거 안돼요! 실패는 성공의 어머니?</span>
+                </li>
+            </ul>
+        </nav>
+
+        <section class="type-key-terms">
+            <h3>🔑 수업 핵심 키워드</h3>
+            <div class="keyword-list">
+                <span class="keyword-chip">아날로그 입력</span>
+                <span class="keyword-chip">전압 분배 회로</span>
+                <span class="keyword-chip">CdS 조도 센서</span>
+                <span class="keyword-chip">Micro:Bit</span>
+                <span class="keyword-chip">브레드보드</span>
+            </div>
+        </section>
+
+        <!-- Framework 0: 센서의 확장: 아날로그 센서 -->
+        <section>
+            <h2>0. 센서의 확장: 아날로그 센서</h2>
+            <h3>MakeCode의 한계를 넘어서</h3>
+            <p>이전 시간에 우리는 마이크로비트에 센서를 연결해서 여러가지 실험을 할 수 있다는 것을 배웠어. <strong>MakeCode</strong>를 이용하면 아주 간단한 블록 코딩으로 다양한
+                센서를 제어할 수 있었지. 하지만 <em>내가 산 센서를 블록이 지원하지 않는다면</em> 어떻게 해야 할까? 이제 마지막 단계야. 이번 수업을 마치면 이제 우리는
+                <strong>어떤 아날로그 센서</strong>를 가져와도 직접 마이크로비트에 연결해서 원하는 값을 읽어올 방법이 있다는걸 알게될거야. 걱정하지마, 엄청난 코딩을 하거나 하진 않아.
+                <strong>센서의 원리</strong>만 알면 쉬울거야.
+            </p>
+        </section>
+
+        <!-- Framework 1: Theoretical Foundation -->
+        <section>
+            <h2>1. 아날로그 신호의 이해: 0과 1 사이의 무한한 세계</h2>
+
+            <h3>아날로그? 낡고 옛날 것 아닌가요?</h3>
+            <p><strong>디지털(Digital)</strong> 세계, 이젠 우리에게 너무 익숙한 말이야. 버튼을 누르면 켜지고(1), 떼면 꺼지는(0) 명확한 세계지. 하지만
+                우리가 사는 현실은 그렇지 않아. "오늘은 덥니?"라고 물었을 때 "네/아니요"로만 대답할 수 없잖아? "조금 더워", "엄청 더워", "미칠 듯이 더워"처럼 <strong>연속적인
+                    값</strong>이 필요해. 그 연속적인 신호를 우리는 <strong>아날로그(Analog)</strong> 신호라고 불러. 이번 수업의 첫 번째 목표는 바로 이 연속적인
+                아날로그 세상으로 떠나는 거야.</p>
+
+            <div class="image-container">
+                <img src="https://www.processsensing.com/blogimg/analog%20vs%20digital%20sensors.png"
+                    style="max-width: 80%;" alt="아날로그 vs 디지털 신호 비교 그래프">
+                <p class="image-caption">아날로그 vs 디지털 신호 비교 이미지</p>
+            </div>
+
+            <p>아날로그 신호를 받는 마이크로비트는 사실 그 신호를 바로 이해할 수는 없어. 왜냐하면 마이크로비트도 디지털 기반의 컴퓨터이기 때문이지. 그래서 아날로그 신호를 디지털로
+                <strong>번역</strong>해야 해. 마이크로비트는 이 아날로그 신호를 <strong>0부터 1023까지의 숫자</strong>로 번역해서 이해해. 왜 하필 1023일까? 이건
+                마이크로비트의 뇌 속에 있는 <strong>ADC(Analog-to-Digital Converter)</strong>라는 번역기가 10비트(bit), 그러니까 2진법 10자리 숫자 표현이
+                가능하기 때문이야. 2의 10제곱은 1024니까, 0을 포함하면 1023까지 잴 수 있는 거지.
+            </p>
+
+            <div class="image-container">
+                <img src="https://create.routenote.com/blog/wp-content/uploads/2023/09/Picture4-960x540.png"
+                    alt="아날로그의 디지털 변환" style="max-width: 50%;">
+                <p class="image-caption">아날로그의 디지털 변환</p>
+            </div>
+
+            <h3>왜 센서가 중요한가?</h3>
+            <p>센서를 다룬다는 건 컴퓨터에게 <strong>감각 기관</strong>을 선물하는 것과 같아. 키보드나 마우스 없이도 컴퓨터가 스스로 주변 환경(빛, 소리, 온도)을 느끼게 하는 거지.
+                이번에 다룰 <strong>조도 센서(CdS)</strong>는 정말 직관적이야. 손으로 가리면 어두워지고, 손을 떼면 밝아져. 너희가 만든 회로가 살아서 움직일 거야! 😊</p>
+
+            <h3>마이크로비트에 눈👀 달아주기</h3>
+            <p>이번 시간에는 CdS 조도 센서를 마이크로비트에 연결해서, 마이크로비트가 빛을 감지하고 주변 밝기를 LED로 표현하는 회로를 직접 만들거야. 하지만, 단순히 센서를 연결하는게 전부가
+                아니야. 센서가 어떻게 신호를 보내고, 컴퓨터는 어떻게 그 신호를 해석하는지 오늘 활동을 하고 나면 완벽하게 이해하게 될거라고!</p>
+
+            <div class="highlight-box">
+                <strong>⚡ 핵심 개념1:</strong> 아날로그 신호는 연속적인 값을 가지며, 디지털 신호는 0과 1의 값만 가집니다.<br>
+                <strong>⚡ 핵심 개념2:</strong> 아날로그 센서는 전압으로 신호를 보내고, 마이크로비트는 ADC를 통해 전압을 1024단계의 숫자로 해석합니다.
+            </div>
+        </section>
+
+        <!-- Framework 2: Fundamental Mechanics -->
+        <section class="page-break">
+            <h2>2. 전압 분배 법칙: 보이지 않는 저항을 낚아채는 기술</h2>
+
+            <h3>CdS 센서의 비밀</h3>
+            <p>자, 여기서부터가 오늘의 승부처야. 많은 학생들이 CdS 센서를 그냥 핀에 꽂으면 된다고 생각하는데, 절대 아니야! CdS는 빛을 받으면 저항이 줄어들고, 어두우면 저항이 커지는
+                <strong>가변 저항(Variable Resistor)</strong>일 뿐이야. 저항 자체는 전기를 만들어내지 못해. 그래서 마이크로비트가 읽을 수 있는 <strong>'전압의
+                    크기'</strong>로 바꿔주는 장치가 필요한데, 그게 바로 <strong>전압 분배 회로</strong>란다.
+            </p>
+
+            <p>회로 구조는 간단해. 먼저 <strong>CdS 저항</strong>과 <strong>10kΩ 저항</strong>을 <strong>직렬</strong>로 연결하고, 3.3V의
+                전압(마이크로비트가 만들어 줄 거야.)을 걸어줘. 그리고 CdS 저항과 10kΩ 저항 <strong>사이에</strong> 선을 하나 꼽고 마이크로비트의
+                <strong>P0</strong>라고 하는 핀에
+                연결하면 돼. 대충 그려지니? 자세한 방법은 뒤에서 다시 알려줄 거야.
+            </p>
+
+            <h3>10kΩ 저항은 왜 필요할까?</h3>
+            <p>CdS 혼자서는 아무리 저항이 변해도, 3.3V와 GND 사이에 혼자 연결되면 전압은 항상 3.3V로 일정해(옴의 법칙). 그래서 <strong>파트너 저항(고정 저항, 보통
+                    10kΩ)</strong>이 꼭 필요해! 🤝</p>
+
+            <p>상상해 봐. 3.3V라는 낙차를 가진 물줄기가 흐르는데, 위에는 CdS가, 아래는 10kΩ 저항이 버티고 있어. 둘이 서로 3.3V라는 전압을 나눠서 버티는 거야. 빛이 밝아지면 CdS의
+                저항이 약해져서 아래쪽 10kΩ 쪽으로 더 많은 전압이 쏠리게 돼. 반대로 빛이 어두워지면 CdS의 저항이 커지면서 10kΩ 쪽의 전압은 줄어들지. 마이크로비트는 바로 그
+                <strong>중간 지점의 전압</strong>을 들여다보는 거지.
+            </p>
+
+            <!-- 공식 박스 -->
+            <div class="formula-box">
+                <h4>📐 전압 분배 공식</h4>
+                <div class="formula">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                        <mrow>
+                            <msub>
+                                <mi>V</mi>
+                                <mi>out</mi>
+                            </msub>
+                            <mo>=</mo>
+                            <msub>
+                                <mi>V</mi>
+                                <mi>in</mi>
+                            </msub>
+                            <mo>&#x00D7;</mo>
+                            <mfrac>
+                                <msub>
+                                    <mi>R</mi>
+                                    <mi>fixed</mi>
+                                </msub>
+                                <mrow>
+                                    <msub>
+                                        <mi>R</mi>
+                                        <mi>CdS</mi>
+                                    </msub>
+                                    <mo>+</mo>
+                                    <msub>
+                                        <mi>R</mi>
+                                        <mi>fixed</mi>
+                                    </msub>
+                                </mrow>
+                            </mfrac>
+                        </mrow>
+                    </math>
+                </div>
+                <ul>
+                    <li>빛이 <strong>밝으면</strong>: R<sub>CdS</sub> ↓ → V<sub>out</sub> ↑ → 아날로그 값 ↑</li>
+                    <li>빛이 <strong>어두우면</strong>: R<sub>CdS</sub> ↑ → V<sub>out</sub> ↓ → 아날로그 값 ↓</li>
+                </ul>
+            </div>
+
+            <!-- 실습 활동 -->
+            <div class="activity-box">
+                <h4>✏️ 실습 활동: 전압 분배 계산해보기</h4>
+                <p>빛의 세기에 따른 저항값과 전압을 직접 계산해보세요! <br>
+                    단, V<sub>in</sub> = 3V, R<sub>fixed</sub> = 10kΩ</p>
+
+                <div class="input-line">
+                    <span>예제 1) 밝은 환경 - CdS 저항값:</span>
+                    <span class="blank">1kΩ(1000Ω)</span>
+                    <span>→ P1 전압:</span>
+                    <span class="blank">&nbsp;</span>
+                </div>
+
+                <div class="input-line">
+                    <span>예제 2) 어두운 실내 - CdS 저항값:</span>
+                    <span class="blank">10kΩ(10000Ω)</span>
+                    <span>→ P1 전압:</span>
+                    <span class="blank">&nbsp;</span>
+                </div>
+
+                <div class="input-line">
+                    <span>예제 3) 손으로 가렸을 때 - CdS 저항값:</span>
+                    <span class="blank">50kΩ(50000Ω)</span>
+                    <span>→ P1 전압:</span>
+                    <span class="blank">&nbsp;</span>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <strong>⚡ 핵심 개념1:</strong> CdS 저항은 빛의 세기에 따라 저항의 크기가 변합니다.<br>
+                <strong>⚡ 핵심 개념2:</strong> 전압 분배 회로를 이용하면 CdS의 저항값을 전압으로 변환하는 일종의 조도 센서를 만들 수 있습니다.
+            </div>
+        </section>
+
+        <!-- Framework 3: Practical Application (Circuit) -->
+        <section class="page-break">
+            <h2>3. 실전 회로 구성: 브레드보드 위에 구현되는 몸체</h2>
+
+            <h3>준비물 체크리스트 🛠️</h3>
+            <ul class="checklist">
+                <li><strong>마이크로비트 & 확장 보드</strong>: 두뇌 & 두뇌를 몸과 연결하는 신경망!</li>
+                <li><strong>브레드보드(빵판)</strong>: 납땜 없이 부품을 꽂아 회로를 구성하는 편리한 빵판.</li>
+                <li><strong>CdS 저항 1개</strong>: 빛을 감지하는 주인공.</li>
+                <li><strong>10kΩ 저항 1개 (갈검주)</strong>: 전압 분배를 위한 핵심 파트너. (220Ω이랑 헷갈리면 안 돼!)</li>
+                <li><strong>LED 5개</strong>: 빛의 세기를 보여줄 출력 장치.</li>
+                <li><strong>220Ω 저항 5개 (빨빨갈)</strong>: LED가 타지 않게 지켜주는 보디가드.</li>
+            </ul>
+
+            <h3>단계별 조립 가이드</h3>
+            <p><strong>Step 1: 입력부 (센서) 연결</strong><br>
+                CdS의 한쪽은 3V에, 다른 쪽은 10kΩ 저항과 만나게 꽂아줘. 여기서 점퍼선을 뽑아서 마이크로비트의 <strong>P1</strong> 핀에 꽂아줘. 그리고 10kΩ 저항의 반대쪽
+                다리는 <strong>GND</strong>로 보내줘. (3V - CdS - P1 - 10kΩ - GND 순서)
+            </p>
+
+            <p><strong>Step 2: 출력부 (LED) 연결</strong><br>
+                LED 5개를 일렬로 꽂고 긴 다리(+)는 마이크로비트의 <strong>P2, P3, P4, P5, P6</strong> 핀에 각각 연결. 짧은 다리(-)는
+                220Ω 저항을 하나씩 달아서 모두 <strong>GND</strong> 라인으로!</p>
+
+            <div class="image-container">
+                <img src="cds2d.png" alt="마이크로비트-브레드보드 배선 회로도" style="max-width: 80%;">
+            </div>
+        </section>
+
+        <!-- Framework 4: Logical Structure (Software) -->
+        <section class="page-break">
+            <h2>4. 소프트웨어 로직: 마이크로비트 안에 구현되는 정신</h2>
+
+            <h3>맵핑(Mapping): 수학을 코딩으로</h3>
+            <p>센서 값은 0에서 1023까지 변하는데, 우리가 가진 LED는 고작 5개뿐이야. 이 거대한 숫자를 6단계(0~5)로 어떻게 줄일 수 있을까? 여기서
+                <strong>'맵핑(Mapping)'</strong>이라는 멋진 스킬이 등장해.
+            </p>
+            <p>MakeCode에 있는 <strong>값 변환</strong> 블록을 쓰면 돼. "0부터 1023까지의 값을 0부터 5까지의 범위로 바꿔줘!"라고 명령하는 거지. 수학적으로는 비례식을
+                쓰는 건데, 코딩으로는 블록 하나면 끝이야. 이렇게 변환된 값을 변수에 저장해두고, 그 변수를 조건으로 LED를 켜주면 돼. 스마트 하지? 😎</p>
+
+            <h3>LED를 켜는 조건은 어떻게 정하나요? 조건문(if)의 마법</h3>
+            <p>센서가 보낸 값에 따라 LED를 켜는 로직을 짜기 위해선 간단한 <strong>조건문</strong>이면 충분해. "만약(If) 센서 값이 1보다 크면 첫 번째 LED 켜기, 아니면 끄기.
+                2보다 크면 두 번째 LED 켜기, 아니면 끄기." 이걸 5번 반복하는 거지. 조금 노가다(?) 같지만, 조건문의 원리를 이해하는 데는 아주 좋은 방법이지. 프로그래밍을 더 공부하면
+                더 세련된 조건문을 작성할 수도 있겠지?</p>
+
+            <h3>LED를 어떻게 켜나요?</h3>
+            <p>LED를 켜려면 "핀" 메뉴로 들어가서 <strong>디지털 값 출력</strong> 블록을 찾아야 해. 이 블록으로 각 LED가 연결된 핀(P1, P2, P8, P12,
+                P16)에 1(켜기) 또는 0(끄기)을 출력하는 거지. 핀에 1을 출력한다는 것은 3.3V의 전압을 걸어준다는 의미야. 그러면 LED가 켜지겠지? 💡</p>
+
+            <!-- QR 코드 섹션 -->
+            <div class="qr-section">
+                <h4>📱 스마트폰 카메라로 QR코드를 스캔하여 펌웨어(.hex) 다운로드</h4>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://cho-wh.github.io/CdS/CdS_sensor_1.1.hex"
+                    alt="펌웨어 다운로드 QR코드">
+            </div>
+
+            <div class="image-container">
+                <img src="block.jpg" alt="MakeCode 코딩 블록 구조" style="max-width: 50%;">
+                <p class="image-caption">MakeCode 코딩 블록 구조</p>
+            </div>
+        </section>
+
+        <!-- Framework 5: Troubleshooting -->
+        <section class="page-break">
+            <h2>5. 선생님, 이거 안돼요! 실패는 성공의 어머니?</h2>
+
+            <h3>흔한 실수 TOP 3 ⚡</h3>
+            <p><strong>1. 저항 색깔 실수 </strong><br>
+                "선생님, 값이 안 변해요!" → 십중팔구 10kΩ 자리에 220Ω을 꽂았을 거야. 저항 띠 색깔(갈검주 vs 빨빨갈)을 눈 크게 뜨고 꼭 확인해!</p>
+
+            <p><strong>2. LED 극성 반대 </strong><br>
+                "선생님, 불이 안 켜져요!" → LED는 다이오드라서 전기가 한 방향으로만 흘러. 긴 다리가 플러스(+) 쪽을 향했는지 확인해 봐.</p>
+
+            <p><strong>3. 빵판의 배신 </strong><br>
+                브레드보드 내부의 금속핀이 헐거워서 접촉 불량이 날 때가 있어. 회로가 완벽한데 안 된다면, 부품을 살짝 꾹꾹 눌러보거나 자리를 옆으로 옮겨 보기!</p>
+
+            <div class="highlight-box">
+                <strong>💡 디버깅 팁:</strong> 문제가 생겼을 때는 당황하지 말고, 하나씩 점검해봐요.
+                ① 전원 연결 확인 → ② 저항 값 확인 → ③ LED 극성 확인 → ④ 연결 상태 확인
+            </div>
+        </section>
+
+        <section class="type-summary">
+            <h3>✨ 수업 마무리 및 확장</h3>
+            <ul>
+                <li>잘 성공했니? 이번 수업을 통해 <strong>'입력(센서) → 처리(로직) → 출력(LED)'</strong>이라는 컴퓨터의 기본 작동 원리를 완벽하게 체험했어.</li>
+                <li>확장 과제로 <strong>'어두우면 켜지는 가로등'</strong>을 만들어보는건 어때? 논리적 사고력이 쑥쑥 자라날 거야!</li>
+            </ul>
+        </section>
+
+        <footer class="footer">
+            <p>© 찾아가는 반도체 교실 | 이 자료는 교육 목적으로만 사용 가능합니다.</p>
+        </footer>
+
+    </div>
+</body>
+
+</html>
